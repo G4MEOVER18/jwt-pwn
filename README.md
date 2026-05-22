@@ -90,4 +90,5 @@ MIT License — Copyright (c) 2026 Yanis Ameseder
 
 ---
 
-**Bitcoin donations:** `39vZWmnUwDReQ15BwqQXzyqVQ6U8LardEf`
+**Bitcoin:** `39vZWmnUwDReQ15BwqQXzyqVQ6U8LardEf`
+**PayPal:** [paypal.me/Freakbank1](https://paypal.me/Freakbank1)
