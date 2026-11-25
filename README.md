@@ -1,5 +1,7 @@
 # jwt-pwn
 
+[![CI](https://github.com/G4MEOVER18/jwt-pwn/actions/workflows/python-lint.yml/badge.svg)](https://github.com/G4MEOVER18/jwt-pwn/actions/workflows/python-lint.yml)
+
 Ein Python-3-Toolkit ohne externe Abhängigkeiten zum Aufspüren und Ausnutzen von JWT-Schwachstellen — gebaut für Penetrationstests an Webanwendungen.
 
 > **Nur für autorisierte Sicherheitstests.** Ausschließlich gegen Systeme einsetzen, die du selbst besitzt oder für die du eine ausdrückliche schriftliche Genehmigung hast.
